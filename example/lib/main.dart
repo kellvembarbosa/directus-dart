@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:directus/directus.dart';
 
 void main() async {
-  final sdk = await Directus('http://localhost:8055').init();
-  runApp(MyApp(sdk));
+  await DirectusInstance().init('https://api.zapaudios.com/');
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Directus sdk;
-
-  MyApp(this.sdk);
+  final sdk = DirectusInstance().getInstance;
 
   /// Get posts.
-  Future<DirectusListResponse<Map<String, dynamic>>> getPosts() => sdk.items('posts').readMany();
+  Future<DirectusListResponse<Map<String, dynamic>>> getPosts() =>
+      sdk.items('audios').readMany();
 
   /// Get settings.
-  Future<DirectusResponse<DirectusSettings>> getSettings() => sdk.settings.read();
+  Future<DirectusResponse<DirectusSettings>> getSettings() =>
+      sdk.settings.read();
 
   @override
   Widget build(BuildContext context) {
